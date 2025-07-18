@@ -1,0 +1,37 @@
+name: lexi
+
+services:
+
+  chromadb:
+    image: chromadb/chroma
+    container_name: lexi_chromadb
+    ports:
+      - "8001:8000"  # ChromaDB expõe na 8000 interna
+    volumes:
+      - chroma_data:/chroma
+  
+
+  fastapi:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: lexi_fastapi
+    restart: always
+    volumes:
+      - ../:/app
+      - /app/.venv                  # Exclui o .venv do host
+      - /app/__pycache__
+    ports:
+      - 5000:5000
+    env_file:
+      - ../.env
+    depends_on:
+      - chromadb
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "5000", "--reload", "--reload-dir", "/app"]
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1    
+
+
+volumes:
+  chroma_data:
