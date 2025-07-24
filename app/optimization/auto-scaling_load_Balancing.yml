@@ -1,0 +1,15 @@
+# # Configuração Docker Compose otimizada
+# services:
+#   embedding_worker_1:
+#     image: verit_embedder
+#     deploy:
+#       replicas: 3
+#       resources:
+#         limits:
+#           memory: 4G
+#           cpus: '2.0'
+          
+#   chromadb_cluster:
+#     image: chromadb/chroma
+#     deploy:
+#       replicas: 2  # Cluster para alta disponibilidade

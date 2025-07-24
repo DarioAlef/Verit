@@ -1,10 +1,10 @@
-name: lexi
+name: verit
 
 services:
 
   chromadb:
     image: chromadb/chroma
-    container_name: lexi_chromadb
+    container_name: verit_chromadb
     ports:
       - "8001:8000"  # ChromaDB expõe na 8000 interna
     volumes:
@@ -15,7 +15,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    container_name: lexi_fastapi
+    container_name: verit_fastapi
     restart: always
     volumes:
       - ../:/app
@@ -31,6 +31,9 @@ services:
     environment:
       - PYTHONPATH=/app
       - PYTHONUNBUFFERED=1    
+
+
+  fastembed:
 
 
 volumes:
